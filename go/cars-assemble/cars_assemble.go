@@ -16,6 +16,10 @@ func verifySuccessRate(successRate float64) error {
 // CalculateWorkingCarsPerHour calculates how many working cars are
 // produced by the assembly line every hour.
 func CalculateWorkingCarsPerHour(productionRate int, successRate float64) float64 {
+	if err := verifySuccessRate(successRate); err != nil {
+		// Handle the error. For example, return 0 if successRate is invalid.
+		return 0
+	}
 	return float64(productionRate) * successRate / 100
 }
 
