@@ -1,24 +1,34 @@
 package lasagna
 
+const (
+	defaultPreparationTime = 2
+	noodlesAmmount         = 50
+	sauceAmmount           = 0.2
+	defaultPortions        = 2
+)
+
+
 // PreparationTime calculates the time needed to prepare a lasagna
-func PreparationTime(layers []string, time int) int {
-	if time == 0 {
-		time = 2
+func PreparationTime(layers []string, preparationTime int) int {
+	if preparationTime <= 0 {
+		preparationTime = defaultPreparationTime
 	}
-	return len(layers) * time
+	return len(layers) * preparationTime
 }
 
 // Quantities calculates the ammount of noodles and sauce needed
-func Quantities(layers []string) (noodles int, sauce float64) {
+func Quantities(layers []string) (int, float64) {
+	var noodleLayers int
+	var sauceLayers float64
 	for _, layer := range layers {
 		switch layer {
 		case "noodles":
-			noodles += 50
+			noodleLayers += noodlesAmmount
 		case "sauce":
-			sauce += 0.2
+			sauceLayers += sauceAmmount
 		}
 	}
-	return noodles, sauce
+	return noodleLayers, sauceLayers
 }
 
 // AddSecretIngredient adds the last ingredient of a friends list to the current list
@@ -33,7 +43,7 @@ func ScaleRecipe(ammounts []float64, portions int) []float64 {
 	scaledAmmounts := make([]float64, len(ammounts))
 	if len(ammounts) > 0 {
 		for i, ammount := range ammounts {
-			scaledAmmounts[i] = (ammount * float64(portions)) / 2
+			scaledAmmounts[i] = (ammount * float64(portions)) / defaultPortions
 			}
 		}
 	return scaledAmmounts
